@@ -62,6 +62,11 @@ func doAnalyzeCmd(cmd *cobra.Command, args []string) {
 		logrus.Error("unable to get 'ignore-errors' option:", err)
 	}
 
+	platform, err := cmd.Flags().GetString("platform")
+	if err != nil {
+		logrus.Error("unable to get 'platform' option:", err)
+	}
+
 	runtime.Run(runtime.Options{
 		Ci:           isCi,
 		Source:       sourceType,
@@ -69,5 +74,6 @@ func doAnalyzeCmd(cmd *cobra.Command, args []string) {
 		ExportFile:   exportFile,
 		CiConfig:     ciConfig,
 		IgnoreErrors: viper.GetBool("ignore-errors") || ignoreErrors,
+		Platform:     platform,
 	})
 }
